@@ -10,6 +10,8 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+var cursors;
+var dory;
 
 function preload ()
 {
@@ -22,11 +24,33 @@ function preload ()
 function create ()
 {
     this.add.image(0,0,'ocean').setScale(.5);
-    this.add.image(200,400,'fishRight').setScale(.05);
+   dory = this.add.image(200,400,'fishRight').setScale(.05);
     this.add.image(500,400,'sharkLeft').setScale(.2);
     this.add.image(400,200,'sharkRight').setScale(.19);
+
+    cursors = this.input.keyboard.createCursorKeys();
+
 }
 
 function update ()
 {
+    if (cursors.left.isDown)
+    {
+        dory.x -= 8;
+        dory.scale.x = -1;
+    }
+    else if (cursors.right.isDown)
+    {
+        dory.x += 8;
+        dory.scale.x = 1;
+    }
+
+    if (cursors.up.isDown)
+    {
+        dory.y -= 8;
+    }
+    else if (cursors.down.isDown)
+    {
+        dory.y += 8;
+    }
 }
