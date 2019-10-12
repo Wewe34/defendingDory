@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: window.innerWidth,
+    height: window.innerHeight,
     physics: {
         default: 'arcade',
         arcade: {
@@ -62,9 +62,10 @@ function create ()
     bubbleEmitter = fishParticles.createEmitter({
         x: 0,
         y: 0,
-        speed: 100,
-        lifespan: 2000,
+        speed: 50,
+        lifespan: 500,
         frequency: 50,
+        quantity: 5,
         gravityX: -300,
         on: false,
         blendMode: 'ADD',
@@ -83,6 +84,7 @@ function update ()
         dory.x -= 8;
         dory.scale.x = -1;
         bubbleEmitter.on = true;
+        bubbleEmitter.gravityX = 300;
         if (facingRight) {
             dory.play('dory-switch');
             dory.flipX = false;
@@ -94,6 +96,7 @@ function update ()
         dory.x += 8;
         dory.scale.x = 1;
         bubbleEmitter.on = true;
+        bubbleEmitter.gravityX = -300;
         if (!facingRight) {
             dory.play('dory-switch');
             dory.flipX = true;
