@@ -5,7 +5,8 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 200 }
+            gravity: { x: -100 },
+            debug: false
         }
     },
     scene: {
@@ -23,12 +24,12 @@ var sharkRight;
 var fishParticles;
 var bubbleEmitter;
 var facingRight = true;
+var sharks;
 
 
 function preload ()
 {
     this.load.image('ocean', 'assets/deepblue.jpg');
-    // this.load.image('fishRight', 'assets/fishRight.png');
     this.load.image('sharkLeft', 'assets/sharkLeft.png');
     this.load.image('sharkRight', 'assets/sharkRight.png');
     this.load.image('bubbleParticle', 'assets/bubble.png');
@@ -40,39 +41,65 @@ function preload ()
 
 function create ()
 {
+    cursors = this.input.keyboard.createCursorKeys();
     this.add.image(0,0,'ocean').setScale(.5);
 
-    sharkLeft = this.add.image(500,400,'sharkLeft').setScale(.2);
-    sharkRight = this.add.image(400,200,'sharkRight').setScale(.19);
+        //dory
 
-    cursors = this.input.keyboard.createCursorKeys();
+        dory = this.physics.add.sprite(200,400,'fish').setScale(.2);
+        dory.body.allowGravity = false;
+        console.log(dory);
 
-    dory = this.add.sprite(200,400,'fish').setScale(.2);
+        this.anims.create({
+            key: 'dory-switch',
+            frames: this.anims.generateFrameNumbers('fish'),
+            frameRate: 10,
+            repeat: 0,
+          });
 
-    this.anims.create({
-        key: 'dory-switch',
-        frames: this.anims.generateFrameNumbers('fish'),
-        frameRate: 10,
-        repeat: 0,
-      });
+          dory.setCollideWorldBounds(true);
 
 
+          //dory particle emitter
 
-    fishParticles = this.add.particles('bubbleParticle');
-    bubbleEmitter = fishParticles.createEmitter({
-        x: 0,
-        y: 0,
-        speed: 50,
-        lifespan: 500,
-        frequency: 50,
-        quantity: 5,
-        gravityX: -300,
-        on: false,
-        blendMode: 'ADD',
-        scale: {start: .03, end: 0.03}
-    })
+        fishParticles = this.add.particles('bubbleParticle');
+        bubbleEmitter = fishParticles.createEmitter({
+            x: 0,
+            y: 0,
+            speed: 50,
+            lifespan: 500,
+            frequency: 50,
+            quantity: 5,
+            gravityX: -300,
+            on: false,
+            blendMode: 'ADD',
+            scale: {start: .02, end: 0.02}
+        })
 
-    bubbleEmitter.startFollow(dory);
+        bubbleEmitter.startFollow(dory);
+
+    //sharkies
+
+    // sharkLeft = this.physics.add.sprite(500,400,'sharkLeft').setScale(.2);
+    // sharkRight = this.physics.add.sprite(400,200,'sharkRight').setScale(.19);
+
+    const sharks = this.physics.add.group();
+
+	function sharkGen () {
+    const yCoord = Math.random() * window.innerHeight;
+    sharks.create(window.innerWidth + 150, yCoord , 'sharkLeft').setScale(.2);
+  }
+
+  const sharkGenLoop = this.time.addEvent({
+    delay: 1000,
+    callback: sharkGen,
+    callbackScope: this,
+    loop: true
+  });
+
+    console.log(sharkLeft);
+
+
 
 }
 
