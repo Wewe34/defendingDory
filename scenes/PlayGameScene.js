@@ -6,6 +6,7 @@ export class PlayGameScene extends Phaser.Scene
         super("Play")
         this.facingRight = true;
         this.score = 0;
+        this.finalScoreText = null;
         this.sharkGenLoop = null;
         this.single = null;
         this.energyLevel = 500;
@@ -136,15 +137,17 @@ export class PlayGameScene extends Phaser.Scene
 
         if (!this.isGameOver) {
             this.timing = setInterval(() => {
-                this.score += 53;
+                this.score += 93;
             }, 2000)
         }
 
         console.log(this);
-        this.isGameOverText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2, `GAME OVER`, {font: '70px Times New Roman'});
-        this.mainMenuText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.5, `Main Menu`, {font: '40px Times New Roman'});
+        this.isGameOverText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2, `GAME OVER`, {font: '90px Times New Roman'}).setDepth(5);
+        this.finalScoreText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.5, `FINAL SCORE: ${this.score}`, {font: '60px Times New Roman'}).setDepth(5);
+        this.mainMenuText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.2, `Main Menu`, {font: '40px Times New Roman'}).setDepth(5);
         this.isGameOverText.visible = false;
         this.mainMenuText.visible = false;
+        this.finalScoreText.visible = false;
 
         this.mainMenuText.setInteractive();
 
@@ -163,7 +166,7 @@ export class PlayGameScene extends Phaser.Scene
 
     lifeDeduct()
     {
-        this.energyLevel -= 100;
+        this.energyLevel -= 1;
     }
 
 
@@ -210,25 +213,29 @@ export class PlayGameScene extends Phaser.Scene
     }
         //update shark quantity and speed
 
-        if(this.score >= 350 && this.score < 700) {
-            this.sharkGenLoop.delay = 700
-            this.single.body.velocity.x = -350;
-        }
-        else if (this.score >=700 && this.score < 1400) {
+        if(this.score >= 500 && this.score < 1000) {
             this.sharkGenLoop.delay = 600
+            this.single.body.velocity.x = -400;
+        }
+        else if (this.score >=1000 && this.score < 2000) {
+            this.sharkGenLoop.delay = 500
             this.single.body.velocity.x = -380;
         }
-        else if (this.score >=1400 && this.score < 3200) {
-            this.sharkGenLoop.delay = 500
+        else if (this.score >=2000 && this.score < 3500) {
+            this.sharkGenLoop.delay = 400
             this.single.body.velocity.x = -450;
         }
-        else if (this.score >= 3200 && this.score < 4500) {
-            this.sharkGenLoop.delay = 350
+        else if (this.score >= 3500 && this.score < 5500) {
+            this.sharkGenLoop.delay = 300
             this.single.body.velocity.x = -550;
         }
-        else if (this.score >= 4500) {
-            this.sharkGenLoop.delay = 300
+        else if (this.score >= 5500 && this.score < 6500) {
+            this.sharkGenLoop.delay = 200
             this.single.body.velocity.x = -650;
+        }
+        else if (this.score >= 6500){
+            this.sharkGenLoop.delay = 170
+            this.single.body.velocity.x = -750;
         }
 
         //update score by the second
@@ -242,21 +249,11 @@ export class PlayGameScene extends Phaser.Scene
              this.physics.pause();
              this.isGameOver = true;
              this.isGameOverText.visible = true;
+             this.finalScoreText.text = `FINAL SCORE ${this.score}`;
+             this.finalScoreText.visible = true;
              this.mainMenu.visible = false;
              this.mainMenuText.visible = true;
              clearInterval(this.timing);
-
-            //  console.log(this.energyLevel)
-            // this.isGameOver = true;
-            //  console.log('game', this.isGameOver)
-            // this.scene.start('GameOver', {score: this.score, isGameOver: this.isGameOver, energyLevel: this.energyLevel});
-            // this.scene.restart();
-            // this.isGameOver = false;
-            // this.score = 0;
-            // this.energyLevel = 500;
-            // this.score = 0;
-            // this.scoreLabel.text = `SCORE: ${this.score}`
-            // console.log(this.score)
          }
     }
 

@@ -1,7 +1,7 @@
 import {MenuScene} from './scenes/MenuScene.js';
 import {PlayGameScene} from './scenes/PlayGameScene.js';
 import {HowToScene} from './scenes/HowToScene.js';
-
+import {LandingPage} from './scenes/LandingPage.js';
 
 var config = {
     type: Phaser.AUTO,
@@ -15,7 +15,7 @@ var config = {
         }
     },
     scene: [
-        MenuScene, HowToScene, PlayGameScene
+        LandingPage, MenuScene, HowToScene, PlayGameScene
     ]
 };
 
