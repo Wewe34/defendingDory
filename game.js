@@ -25,10 +25,13 @@ var fishParticles;
 var bubbleEmitter;
 var facingRight = true;
 var sharks;
+var bloodParticles;
+var bloodEmitter;
 
 
 function preload ()
 {
+    this.load.image('red', 'assets/dripBlood.png');
     this.load.image('ocean', 'assets/deepblue.jpg');
     this.load.image('sharkLeft', 'assets/sharkLeft.png');
     this.load.image('sharkRight', 'assets/sharkRight.png');
@@ -60,7 +63,7 @@ function create ()
           dory.setCollideWorldBounds(true);
 
 
-          //dory particle emitter
+          //dory bubble particle emitter
 
         fishParticles = this.add.particles('bubbleParticle');
         bubbleEmitter = fishParticles.createEmitter({
@@ -77,6 +80,26 @@ function create ()
         })
 
         bubbleEmitter.startFollow(dory);
+
+        //dory blood particles
+
+        bloodParticles = this.add.particles('red');
+        bloodEmitter = bloodParticles.createEmitter({
+            x: 0,
+            y: 0,
+            speed: 10,
+            lifespan: 3000,
+            frequency: 3000,
+            quantity: 2,
+            gravityY: 180,
+            active: true,
+            blendMode: 'ADD',
+            scale: {start: .1, end: .1},
+            alpha: {start: 1, end: 0},
+            delay: 100
+        })
+
+        bloodEmitter.startFollow(dory);
 
     //sharkies
 
