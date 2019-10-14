@@ -13,30 +13,26 @@ export class HowToScene extends Phaser.Scene {
     create() {
 
         //background
-        this.cameras.main.backgroundColor.setTo(255, 127, 80);
+        this.cameras.main.backgroundColor.setTo(68, 94, 238);
+        let background = this.add.image(100, 100, 'bg').setScale(0.5);
 
 
         //directions. Seperated because the text would go off the page
 
-        this.add.text(200, 150, 'HOW TO PLAY', { font: '60px Times New Roman', fill: '#fff'});
-        this.add.text(200, 250, 'I...I...I cut myself trying to find my way back home!', { font: '25px Times New Roman', fill: '#fff'});
-        this.add.text(200, 280, "I don't remember how it happened!", { font: '25px Times New Roman', fill: '#fff'});
-        this.add.text(200, 310, 'Now the nearby sharks have a taste for my blood and I..I..I..I am in great danger!!', { font: '25px Times New Roman', fill: '#fff'});
-        this.add.text(200, 340, 'Use the arrow keys to help me dodge the sharks.', { font: '25px Times New Roman', fill: '#fff'});
-        this.add.text(200, 370, 'I..I only have 7 lives! A life will be deducted if I am hit.', { font: '25px Times New Roman', fill: '#fff'});
-        this.add.text(200, 400, 'The longer you last, the higher your score. BUT, more sharks will come and they are much faster!', { font: '25px Times New Roman', fill: '#fff'});
-        this.add.text(200, 430, 'So whatever you do...just keep swimming, just keep swimming, just keep swimming..', { font: '25px Times New Roman', fill: '#fff'});
-        let back = this.add.text(200, 500, 'BACK', { font: '40px Times New Roman', fill: '#fff'});
-        let play = this.add.text(400, 500, 'PLAY', { font: '40px Times New Roman', fill: '#fff'});
+        this.add.text(200, 150, 'HOW TO PLAY', { font: '60px Optima', fill: '#fff'});
+        this.add.text(200, 250, 'I...I...I cut myself trying to find my way back home!', { font: '25px Optima', fill: '#fff'});
+        this.add.text(200, 280, "I don't remember how it happened!", { font: '25px Optima', fill: '#fff'});
+        this.add.text(200, 310, 'Now the nearby sharks have a taste for my blood and I..I..I..I am in great danger!!', { font: '25px Optima', fill: '#fff'});
+        this.add.text(200, 340, 'Use the arrow keys to help me dodge the sharks!', { font: '25px Optima', fill: '#fff'});
+        this.add.text(200, 370, 'If I am hit or get too close, my blood will go down. Don\'t let it get to 0!', { font: '25px Optima', fill: '#fff'});
+        this.add.text(200, 400, 'The longer you last, the higher your score. BUT, more sharks will come and they are much faster!', { font: '25px Optima', fill: '#fff'});
+        this.add.text(200, 430, 'So whatever you do...just keep swimming, just keep swimming, just keep swimming..', { font: '25px Optima', fill: '#fff'});
+        let back = this.add.text(200, 500, 'BACK', { font: '40px Optima', fill: '#fff'});
 
-        back.setInteractive();
-        play.setInteractive();
+        back.setInteractive({ cursor: 'pointer' });
 
         back.on("pointerup", () => {
             this.scene.start('Menu')
-        })
-        play.on("pointerup", () => {
-            this.scene.start('Play')
         })
     }
 }

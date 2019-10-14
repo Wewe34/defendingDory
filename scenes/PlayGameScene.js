@@ -9,13 +9,14 @@ export class PlayGameScene extends Phaser.Scene
         this.finalScoreText = null;
         this.sharkGenLoop = null;
         this.single = null;
-        this.energyLevel = 500;
-        this.energyLevelText = null;
+        this.bloodLevel = 500;
+        this.bloodLevelText = null;
         this.isGameOver = false;
         this.isGameOverText = null;
         this.timing = null;
         this.mainMenu = null;
         this.mainMenuText = null;
+        this.gameIsPaused = false;
     }
 
     init(data){
@@ -25,16 +26,6 @@ export class PlayGameScene extends Phaser.Scene
 
     preload ()
     {
-        //images
-        this.load.image('red', 'assets/dripBlood.png');
-        this.load.image('ocean', 'assets/deepblue.jpg');
-        this.load.image('sharkFaceLeft', 'assets/sharkTrim.png');
-        this.load.image('sharkRight', 'assets/sharkRight.png');
-        this.load.image('bubbleParticle', 'assets/bubble.png');
-        this.load.spritesheet('fish', 'assets/spritesheet.png', {
-            frameWidth: 480,
-            frameHeight: 270
-        });
 
 
     }
@@ -49,9 +40,10 @@ export class PlayGameScene extends Phaser.Scene
 
 
         // back to Home
-        this.mainMenu = this.add.text(20, 20, "Main Menu", { font: '20px Times New Roman', fill: '#fff'});
-        this.mainMenu.setInteractive();
+        this.mainMenu = this.add.text(20, 20, "MAIN MENU", { font: '20px Optima', fill: '#fff'});
+        this.mainMenu.setInteractive({ cursor: 'pointer' });
         this.mainMenu.on("pointerup", () => {
+            clearInterval(this.timing);
             this.scene.start('Menu')
         })
 
@@ -64,7 +56,21 @@ export class PlayGameScene extends Phaser.Scene
         this.anims.create({
             key: 'dory-switch',
             frames: this.anims.generateFrameNumbers('fish'),
-            frameRate: 10,
+            frameRate: null,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: 'collideLeft',
+            frames: this.anims.generateFrameNumbers('collideLeft'),
+            frameRate: null,
+            repeat: 0,
+        });
+
+        this.anims.create({
+            key: 'collideRight',
+            frames: this.anims.generateFrameNumbers('collideRight'),
+            frameRate: 5,
             repeat: 0,
         });
 
@@ -133,23 +139,23 @@ export class PlayGameScene extends Phaser.Scene
 
         //scoring setup
 
-        this.scoreLabel = this.add.text(window.innerWidth - 300, 20, `SCORE:  ${this.score}`, {font: '20px Times New Roman'})
+        this.scoreLabel = this.add.text(this.sys.game.config.width - 200, 20, `SCORE:  ${this.score}`, {font: '20px Optima'})
 
-        if (!this.isGameOver) {
+        if (!this.isGameOver && !this.gameIsPaused) {
             this.timing = setInterval(() => {
                 this.score += 93;
             }, 2000)
         }
+        //clean
 
-        console.log(this);
-        this.isGameOverText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2, `GAME OVER`, {font: '90px Times New Roman'}).setDepth(5);
-        this.finalScoreText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.5, `FINAL SCORE: ${this.score}`, {font: '60px Times New Roman'}).setDepth(5);
-        this.mainMenuText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.2, `Main Menu`, {font: '40px Times New Roman'}).setDepth(5);
+        this.isGameOverText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 2, `GAME OVER`, {font: '90px Optima'}).setDepth(5);
+        this.finalScoreText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.5, `FINAL SCORE: ${this.score}`, {font: '60px Optima'}).setDepth(5);
+        this.mainMenuText = this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height / 1.2, `MAIN MENU`, {font: '40px Optima'}).setDepth(5);
         this.isGameOverText.visible = false;
         this.mainMenuText.visible = false;
         this.finalScoreText.visible = false;
 
-        this.mainMenuText.setInteractive();
+        this.mainMenuText.setInteractive({ cursor: 'pointer' });
 
         this.mainMenuText.on("pointerup", () => {
             setTimeout(function(){
@@ -159,20 +165,30 @@ export class PlayGameScene extends Phaser.Scene
 
         //Lives remaining
 
-       this.energyLevelText = this.add.text(700, 20, `ENERGY LEVEL:  ${this.energyLevel}`, {font: '20px Times New Roman'})
+       this.bloodLevelText = this.add.text(this.sys.game.config.width / 2.5, 20, `BLOOD LEVEL:  ${this.bloodLevel}`, {font: '20px Optima'})
 
 
     }
 
     lifeDeduct()
     {
-        this.energyLevel -= 1;
+        this.sound.play('sharkHit', {
+            mute: false,
+            volume: 0.2,
+            rate: 1,
+            detune: 0,
+            seek: 0,
+            loop: false,
+            delay: 0
+        });
+        this.bloodLevel -= 1;
+        this.dory.play('collideLeft');
     }
 
 
     update ()
     {
-    if(!this.isGameOver)
+    if (!this.isGameOver)
     {
 
         if (this.cursors.left.isDown)
@@ -242,10 +258,10 @@ export class PlayGameScene extends Phaser.Scene
         this.scoreLabel.text = `SCORE: ${this.score}`;
 
          //update lives remaining
-         this.energyLevelText.text = `ENERGY LEVEL: ${this.energyLevel}`;
+         this.bloodLevelText.text = `BLOOD LEVEL: ${this.bloodLevel}`;
 
          //gameover
-         if (this.energyLevel <= 0) {
+         if (this.bloodLevel <= 0) {
              this.physics.pause();
              this.isGameOver = true;
              this.isGameOverText.visible = true;
