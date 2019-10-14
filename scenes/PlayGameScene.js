@@ -16,6 +16,7 @@ export class PlayGameScene extends Phaser.Scene
         this.timing = null;
         this.mainMenu = null;
         this.mainMenuText = null;
+        this.restartText = null;
         this.gameIsPaused = false;
     }
 
@@ -26,7 +27,6 @@ export class PlayGameScene extends Phaser.Scene
 
     preload ()
     {
-
 
     }
 
@@ -43,8 +43,16 @@ export class PlayGameScene extends Phaser.Scene
         this.mainMenu = this.add.text(20, 20, "MAIN MENU", { font: '20px Optima', fill: '#fff'});
         this.mainMenu.setInteractive({ cursor: 'pointer' });
         this.mainMenu.on("pointerup", () => {
-            clearInterval(this.timing);
-            this.scene.start('Menu')
+            this.gameIsPaused = true;
+            this.scene.switch('Menu')
+        })
+
+        this.restartText = this.add.text(180, 20, "RESTART", { font: '20px Optima', fill: '#fff'});
+        this.restartText.setInteractive({ cursor: 'pointer' });
+        this.restartText.on("pointerup", () => {
+            setTimeout(function(){
+				location.reload();
+			}, 100);
         })
 
         //dory create and animate
@@ -125,6 +133,8 @@ export class PlayGameScene extends Phaser.Scene
         this.single.body.allowGravity = false;
         this.single.body.velocity.x = -320;
         }
+
+
 
         this.sharkGenLoop = this.time.addEvent({
             delay: 800,
@@ -269,6 +279,7 @@ export class PlayGameScene extends Phaser.Scene
              this.finalScoreText.visible = true;
              this.mainMenu.visible = false;
              this.mainMenuText.visible = true;
+             this.restartText.visible = false;
              clearInterval(this.timing);
          }
     }

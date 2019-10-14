@@ -54,9 +54,9 @@ export class PreloadScene extends Phaser.Scene {
 
     create()
     {
-
+        this.add.text(this.sys.game.config.width/7,this.sys.game.config.height /2 , "Loading...", { font: "60px Optima", fill: "#fff"});
         setTimeout(() => {
             this.scene.start('Landing');
-        }, 1)
+        }, 1500)
     }
 }

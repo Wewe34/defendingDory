@@ -4,6 +4,7 @@ export class MenuScene extends Phaser.Scene {
     constructor () {
         super("Menu")
         this.swimmingCall = 0;
+        this.isGameStarted = false;
     }
     init()
     {
@@ -41,15 +42,27 @@ export class MenuScene extends Phaser.Scene {
 
         //How to play
         howTo.setInteractive({ cursor: 'pointer' });
+
+
+        playtext.on("pointerup", () => {
+
+            if (!this.isGameStarted)
+            {
+                this.isGameStarted = true;
+                this.scene.start('Play')
+            } else
+            {
+                this.scene.switch('Play')
+            }
+        })
+
         howTo.on("pointerup", () => {
             this.scene.start('HowTo')
         })
 
         // game start
         playtext.setInteractive({ cursor: 'pointer' });
-        playtext.on("pointerup", () => {
-            this.scene.start('Play')
-        })
+
 
         //audio play on gesture. (chrome requirement)
 
