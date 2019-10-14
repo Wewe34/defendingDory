@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 
 
 export class MenuScene extends Phaser.Scene {
@@ -6,28 +7,18 @@ export class MenuScene extends Phaser.Scene {
         this.swimmingCall = 0;
         this.isGameStarted = false;
     }
-    init()
-    {
-
-    }
-
-    preload()
-    {
-
-    //audio
-
-
-    }
 
     create()
     {
 
-
-
-        //styling
-        let background = this.add.image(100, 100, 'bg').setScale(0.5);
-        this.add.text(this.sys.game.config.width/7, 80, "DEFENDING DORY", { font: "100px Optima", fill: "#fff"});
-
+        //add to scene
+        this.add.image(100, 100, 'bg').setScale(0.5);
+        this.add.text(this.sys.game.config.width / 7, 80,
+             "DEFENDING DORY", { font: "100px Optima", fill: "#fff"});
+        let howTo = this.add.text(this.sys.game.config.width / 3, 300,
+             "HOW TO PLAY", { font: "50px Optima", fill: "#fff"}).setDepth(5);
+        let playtext = this.add.text(this.sys.game.config.width / 2.4, 400,
+             "PLAY", { font: "50px Optima", fill: "#fff"}).setDepth(5);
 
         if (this.swimmingCall === 0) {
             this.swimming();
@@ -37,13 +28,9 @@ export class MenuScene extends Phaser.Scene {
             this.swimmingCall += 1;
         }
 
-        let howTo = this.add.text(this.sys.game.config.width/ 3, 300, "HOW TO PLAY", { font: "50px Optima", fill: "#fff"}).setDepth(5);
-        let playtext = this.add.text(this.sys.game.config.width/ 2.4, 400, "PLAY", { font: "50px Optima", fill: "#fff"}).setDepth(5);
-
-        //How to play
+        //How to text and play text interactivity
         howTo.setInteractive({ cursor: 'pointer' });
-
-
+        playtext.setInteractive({ cursor: 'pointer' });
         playtext.on("pointerup", () => {
 
             if (!this.isGameStarted)
@@ -59,23 +46,15 @@ export class MenuScene extends Phaser.Scene {
         howTo.on("pointerup", () => {
             this.scene.start('HowTo')
         })
-
-        // game start
-        playtext.setInteractive({ cursor: 'pointer' });
-
-
-        //audio play on gesture. (chrome requirement)
-
-
-
     }
 
+    //dory and shark swimming across scene
     swimming() {
-        this.dory = this.physics.add.sprite(window.innerWidth, 320, 'fishLeft').setScale(.1);
+        this.dory = this.physics.add.sprite(window.innerWidth, 320, 'fishLeft').setScale(0.1);
         this.dory.body.allowGravity = false;
         this.dory.body.velocity.x = -620;
 
-        this.shark = this.physics.add.sprite(window.innerWidth + 450, 320, 'sharkLeft').setScale(.3);
+        this.shark = this.physics.add.sprite(window.innerWidth + 450, 320, 'sharkLeft').setScale(0.3);
         this.shark.body.allowGravity = false;
         this.shark.body.velocity.x = -680;
     }

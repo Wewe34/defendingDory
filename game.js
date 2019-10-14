@@ -12,9 +12,11 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: { x: -100 },
+            //used to place wireframes around physics objects to help debug
             debug: false
         }
     },
+    //scenes are placed in an array in the order that they load
     scene: [
         PreloadScene, LandingPage, MenuScene, HowToScene, PlayGameScene
     ]
