@@ -2,22 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
-    <link rel="manifest" href="/assets/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+    <link rel="manifest" href="./assets/site.webmanifest">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- <meta http-equiv="Content-Security-Policy" content="font-src 'self' data:; img-src 'self' data:; default-src 'self'">  -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <!-- src to phaser class object -->
-    <script type="text/javascript" src="./node_modules/phaser/dist/phaser.js"></script>
+    <script type="text/javascript" src="../node_modules/phaser/dist/phaser.js"></script>
     <!-- had to switch the following type attribute to module as import functionality would not be found -->
     <script type="module" src="./scenes/PreloadScene.js"></script>
     <script type="module" src="./scenes/LandingPage.js"></script>
     <script type="module" src="./scenes/MenuScene.js"></script>
     <script type="module" src="./scenes/HowToScene.js"></script>
     <script type="module" src="./scenes/PlayGameScene.js"></script>
-    <script type="module" src="/game.js"></script>
+    <script type="module" src="game.js"></script>
     <title>Defending Dory</title>
 </head>
 <body>
