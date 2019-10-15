@@ -1,14 +1,25 @@
 {
   "name": "arcade",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "phaser": "^3.19.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wewe34/defendingDory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Wewe34/defendingDory/issues"
+  },
+  "homepage": "https://github.com/Wewe34/defendingDory#readme",
+  "description": ""
 }
