@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 
-
 export class PreloadScene extends Phaser.Scene {
     constructor () {
         super("Preload")
