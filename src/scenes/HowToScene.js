@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 
-
 export class HowToScene extends Phaser.Scene {
     constructor () {
         super('HowTo')
