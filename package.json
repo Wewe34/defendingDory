@@ -4,7 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "webpack --mode production"
   },
   "author": "Cassandra Terry",
   "license": "ISC",
@@ -12,7 +13,14 @@
     "express": "^4.17.1",
     "phaser": "^3.19.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "babel-loader": "^8.0.6"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Wewe34/defendingDory.git"
